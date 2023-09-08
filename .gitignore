@@ -1,0 +1,8 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+# Sphinx documentation
+docs/*
+!/docs/conf.py
+!/docs/index.rst
+!/docs/Makefile
