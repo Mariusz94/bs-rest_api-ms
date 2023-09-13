@@ -1,17 +1,18 @@
 import logging
+
 import config
 
 
 def init_logging() -> None:
     """
-    Konfiguracja logera.
+    Configure the logger.
 
     Returns:
         None
     """
     logging.basicConfig(
         level=getattr(logging, config.LOGGING_MODE),
-        format="%(asctime)s.%(msecs)03d-%(levelname)s-%(funcName)s()-%(message)s",
+        format=config.LOGGER_FORMAT,
         datefmt="%Y-%m-%d %H:%M:%S",
     )
     logging.info("SET UP FINISHED\n")
@@ -19,7 +20,7 @@ def init_logging() -> None:
 
 def config_logs() -> None:
     """
-    Logi pojawiające się przy uruchomieniu mikroserwisu.
+    Logs appearing when the microservice is started.
 
     Returns:
         None

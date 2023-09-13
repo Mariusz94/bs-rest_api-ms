@@ -28,9 +28,10 @@ setup:
 	sphinx-quickstart
 
 doc:
-	find . -name "*.rst" ! -name "index.rst" -exec rm {} \;
+	find . -name "*.rst" ! -name "index.rst" -exec rm {} \; -quit
 	sphinx-apidoc -o . ../app 
 	make clean
 	make html
 	make latexpdf
-	cp ./_build/latex/bs-rest_api-ms.pdf ./../bs-rest_api-ms.pdf
+	cp ./_build/latex/doc.pdf ./../doc.pdf
+
