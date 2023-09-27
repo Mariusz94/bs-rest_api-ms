@@ -6,3 +6,4 @@ grpcio==1.50.0
 grpcio-tools==1.50.0
 
 werkzeug==2.0.3
+pyjwt

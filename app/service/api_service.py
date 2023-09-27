@@ -1,4 +1,5 @@
-from service.connectors.db_connector_service import get_balance
+from service.connectors.db_connector_service import get_balance as service_get_balance
+from service.connectors.authentication_service import login as service_login
 
 
 def check_balance(user_id: str) -> dict:
@@ -11,8 +12,23 @@ def check_balance(user_id: str) -> dict:
     Returns:
         dict: Balance info.
     """
-    balance_info = get_balance(user_id=user_id)
+    balance_info = service_get_balance(user_id=user_id)
     return balance_info
+
+
+def login(login: str, password: str) -> dict:
+    """
+    Check is user exist.
+
+    Args:
+        login (str): User login.
+        password (str): User password.
+
+    Returns:
+        dict: Info about user.
+    """
+    user_info = service_login(login, password)
+    return user_info
 
 
 def make_withdrawal() -> dict:

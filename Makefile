@@ -19,7 +19,7 @@ doc:
 
 # Make tests
 test:
-	pytest -s -vv tests/functional_tests/grpc_tests.py
+	pytest -s -vv tests/functional_tests/tests.py
 
 
 # Method to remove folders
@@ -36,19 +36,21 @@ endif
 ###########################################
 
 # Generate proto messages
-gen_proto: clone_structure_project_generator proto_generate
-	make rm DIR=structure_project_generator
+gen_proto: clone_proto_repo proto_generate
+	make rm DIR=bs-files-proto
 	@ECHO Generating proto message ended with SUCCESS
 
 # Cloning repository 'structure_project_generator'
-clone_structure_project_generator:
-	@ECHO Cloning repository 'structure_project_generator'
-	git clone --branch dev https://github.com/Mariusz94/structure_project_generator.git
+clone_proto_repo:
+	@ECHO Cloning repository 'bs-files-proto'
+	git clone --branch main https://github.com/Mariusz94/bs-files-proto.git
 
 # Method to generate proto messages
 proto_generate:
 	@ECHO ---------------- Generate proto files ----------------
-	make gen_spec_proto PROTO_FILE=./structure_project_generator/grpc MESSAGE_NAME=default_msg/default.proto
+	make gen_spec_proto PROTO_FILE=./bs-files-proto/ MESSAGE_NAME=default_msg/default.proto
+	make gen_spec_proto PROTO_FILE=./bs-files-proto/ MESSAGE_NAME=bs_db_connector_msg/db_connector.proto
+	make gen_spec_proto PROTO_FILE=./bs-files-proto/ MESSAGE_NAME=bs_authentication_msg/authentication.proto
 
 # Method to generate specific proto message
 # Usage: make gen_spec_proto PROTO_FILE=./structure_project_generator/grpc MESSAGE_NAME=default_msg/default.proto
@@ -60,4 +62,3 @@ gen_spec_proto:
 	
 	python -m grpc_tools.protoc -I$(PROTO_FILE) --python_out=./tests/ --pyi_out=./tests/ --grpc_python_out=./tests/ $(PROTO_FILE)/$(MESSAGE_NAME)
 	cp $(PROTO_FILE)/$(MESSAGE_NAME) ./tests/$(MESSAGE_NAME)
-

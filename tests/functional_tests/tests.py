@@ -22,3 +22,19 @@ def test_welcome_endpoint(client):
     data = json.loads(response.data.decode("utf-8"))
     assert "info" in data
     assert data["info"] == "server works"
+
+
+def test_login_endpoint(client):
+    """
+    Testuje endpoint POST o ścieżce "/login".
+    """
+    login_data = {
+        "login": "7654",
+        "password": "pass_1",
+    }
+    data = json.dumps(login_data)
+    response = client.post("/login", json=login_data, content_type="application/json")
+    assert response.status_code == 200
+    data = json.loads(response.data.decode("utf-8"))
+    assert "access_token" in data
+    assert "refresh_token" in data
